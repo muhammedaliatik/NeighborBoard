@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_announcements"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Duyurular"/>
+
+    <item
+        android:id="@+id/nav_issues"
+        android:icon="@android:drawable/ic_menu_report_image"
+        android:title="Arızalar"/>
+
+    <item
+        android:id="@+id/nav_swap"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="Takas"/>
+
+    <item
+        android:id="@+id/nav_neighbors"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Komşular"/>
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Profil"/>
+
+
+
+</menu>
