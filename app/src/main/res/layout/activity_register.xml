@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_dark_gradient"
+    android:background="@color/background"
     android:fillViewport="true">
 
     <LinearLayout
@@ -13,7 +13,6 @@
         android:paddingEnd="28dp"
         android:gravity="center_horizontal">
 
-        <!-- Logo -->
         <LinearLayout
             android:layout_width="64dp"
             android:layout_height="64dp"
@@ -29,7 +28,7 @@
                 android:text="NB"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                android:textColor="#FFFFFF"/>
+                android:textColor="@color/text_on_primary"/>
 
         </LinearLayout>
 
@@ -39,7 +38,7 @@
             android:text="Hesap Oluştur"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_primary"
             android:layout_marginBottom="4dp"/>
 
         <TextView
@@ -47,16 +46,15 @@
             android:layout_height="wrap_content"
             android:text="Apartmanına katıl"
             android:textSize="13sp"
-            android:textColor="#8892B0"
+            android:textColor="@color/text_secondary"
             android:layout_marginBottom="36dp"/>
 
-        <!-- Ad Soyad -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ad Soyad"
             android:textSize="13sp"
-            android:textColor="#CCD6F6"
+            android:textColor="@color/text_secondary"
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
 
@@ -70,17 +68,16 @@
             android:paddingStart="18dp"
             android:paddingEnd="18dp"
             android:textSize="15sp"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#4A5568"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_tertiary"
             android:layout_marginBottom="18dp"/>
 
-        <!-- E-posta -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="E-posta"
             android:textSize="13sp"
-            android:textColor="#CCD6F6"
+            android:textColor="@color/text_secondary"
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
 
@@ -94,17 +91,16 @@
             android:paddingStart="18dp"
             android:paddingEnd="18dp"
             android:textSize="15sp"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#4A5568"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_tertiary"
             android:layout_marginBottom="18dp"/>
 
-        <!-- Şifre -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Şifre"
             android:textSize="13sp"
-            android:textColor="#CCD6F6"
+            android:textColor="@color/text_secondary"
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
 
@@ -118,17 +114,16 @@
             android:paddingStart="18dp"
             android:paddingEnd="18dp"
             android:textSize="15sp"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#4A5568"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_tertiary"
             android:layout_marginBottom="18dp"/>
 
-        <!-- Apartman Kodu -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Apartman Kodu"
             android:textSize="13sp"
-            android:textColor="#CCD6F6"
+            android:textColor="@color/text_secondary"
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
 
@@ -142,8 +137,8 @@
             android:paddingStart="18dp"
             android:paddingEnd="18dp"
             android:textSize="15sp"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#4A5568"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_tertiary"
             android:layout_marginBottom="8dp"/>
 
         <TextView
@@ -151,10 +146,9 @@
             android:layout_height="wrap_content"
             android:text="Apartman kodunu yöneticinizden alın"
             android:textSize="12sp"
-            android:textColor="#6272A4"
+            android:textColor="@color/text_secondary"
             android:layout_marginBottom="28dp"/>
 
-        <!-- Kayıt butonu -->
         <Button
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
@@ -162,13 +156,12 @@
             android:text="Kayıt Ol"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_on_primary"
             android:background="@drawable/bg_button_gradient"
             android:stateListAnimator="@null"
             android:elevation="6dp"
             android:layout_marginBottom="16dp"/>
 
-        <!-- Ayraç -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -180,24 +173,23 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1"
-                android:background="#2A2A4A"/>
+                android:background="@color/divider"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="  veya  "
                 android:textSize="12sp"
-                android:textColor="#4A5568"/>
+                android:textColor="@color/text_secondary"/>
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1"
-                android:background="#2A2A4A"/>
+                android:background="@color/divider"/>
 
         </LinearLayout>
 
-        <!-- Giriş yap butonu -->
         <Button
             android:id="@+id/btnGoLogin"
             android:layout_width="match_parent"
@@ -205,7 +197,7 @@
             android:text="Zaten hesabım var"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:textColor="#A78BFA"
+            android:textColor="@color/accent"
             android:background="@drawable/bg_button_outline"
             android:stateListAnimator="@null"
             android:layout_marginBottom="40dp"/>

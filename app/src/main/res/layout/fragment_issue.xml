@@ -26,14 +26,14 @@
                 android:text="Arızalar"
                 android:textSize="26sp"
                 android:textStyle="bold"
-                android:textColor="#FFFFFF"/>
+                android:textColor="@color/text_primary"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Apartmanındaki arıza bildirimleri"
                 android:textSize="13sp"
-                android:textColor="#8892B0"/>
+                android:textColor="@color/text_secondary"/>
 
         </LinearLayout>
 
@@ -56,7 +56,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
         android:src="@android:drawable/ic_input_add"
-        android:backgroundTint="#7C3AED"
+        android:backgroundTint="@color/accent"
+        app:tint="@color/text_on_primary"
         app:borderWidth="0dp"
         app:elevation="8dp"/>
 

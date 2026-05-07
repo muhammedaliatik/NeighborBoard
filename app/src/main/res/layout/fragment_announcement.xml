@@ -11,7 +11,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,18 +26,17 @@
                 android:text="Duyurular"
                 android:textSize="26sp"
                 android:textStyle="bold"
-                android:textColor="#FFFFFF"/>
+                android:textColor="@color/text_primary"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Apartmanındaki son gelişmeler"
                 android:textSize="13sp"
-                android:textColor="#8892B0"/>
+                android:textColor="@color/text_secondary"/>
 
         </LinearLayout>
 
-        <!-- İstatistik kartları -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,14 +63,14 @@
                     android:text="0"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    android:textColor="#A78BFA"/>
+                    android:textColor="@color/accent"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Duyuru"
                     android:textSize="11sp"
-                    android:textColor="#8892B0"/>
+                    android:textColor="@color/text_secondary"/>
 
             </LinearLayout>
 
@@ -92,20 +90,19 @@
                     android:text="Canlı"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    android:textColor="#60A5FA"/>
+                    android:textColor="@color/secondary"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Gerçek Zamanlı"
                     android:textSize="11sp"
-                    android:textColor="#8892B0"/>
+                    android:textColor="@color/text_secondary"/>
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <!-- Liste -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvAnnouncements"
             android:layout_width="match_parent"
@@ -118,7 +115,6 @@
 
     </LinearLayout>
 
-    <!-- FAB -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddAnnouncement"
         android:layout_width="wrap_content"
@@ -126,7 +122,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
         android:src="@android:drawable/ic_input_add"
-        android:backgroundTint="#7C3AED"
+        android:backgroundTint="@color/accent"
+        app:tint="@color/text_on_primary"
         app:borderWidth="0dp"
         app:elevation="8dp"/>
 

@@ -11,14 +11,12 @@
     android:layout_marginBottom="12dp"
     android:elevation="4dp">
 
-    <!-- Üst satır: başlık + zaman -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginBottom="8dp">
 
-        <!-- Mor nokta -->
         <View
             android:layout_width="8dp"
             android:layout_height="8dp"
@@ -33,36 +31,33 @@
             android:layout_weight="1"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
+            android:textColor="@color/text_primary"/>
 
         <TextView
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="11sp"
-            android:textColor="#6272A4"/>
+            android:textColor="@color/text_secondary"/>
 
     </LinearLayout>
 
-    <!-- İçerik -->
     <TextView
         android:id="@+id/tvContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:textColor="#CCD6F6"
+        android:textColor="@color/text_secondary"
         android:lineSpacingMultiplier="1.4"
         android:layout_marginBottom="12dp"
         android:paddingStart="18dp"/>
 
-    <!-- Alt çizgi -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#2A2A4A"
+        android:background="@color/divider"
         android:layout_marginBottom="10dp"/>
 
-    <!-- Gönderen -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -84,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:textColor="#8892B0"/>
+            android:textColor="@color/text_secondary"/>
 
     </LinearLayout>
 
