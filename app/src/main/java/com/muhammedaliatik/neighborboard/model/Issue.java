@@ -10,15 +10,20 @@ public class Issue {
     private String apartmentCode;
     private long timestamp;
 
+    private String senderUid;
+
+
+
     public Issue() {}
 
-    public Issue(String id, String title, String description, String location, String status, String senderName, String apartmentCode, long timestamp) {
+    public Issue(String id, String title, String description, String location, String status, String senderName, String senderUid, String apartmentCode, long timestamp) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.location = location;
         this.status = status;
         this.senderName = senderName;
+        this.senderUid = senderUid;
         this.apartmentCode = apartmentCode;
         this.timestamp = timestamp;
     }
@@ -46,4 +51,7 @@ public class Issue {
 
     public long getTimestamp() { return timestamp; }
     public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
+
+    public String getSenderUid() { return senderUid; }
+    public void setSenderUid(String senderUid) { this.senderUid = senderUid; }
 }

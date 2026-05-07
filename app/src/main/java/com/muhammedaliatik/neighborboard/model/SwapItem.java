@@ -9,13 +9,16 @@ public class SwapItem {
     private boolean available;
     private long timestamp;
 
+    private String ownerUid;
+
     public SwapItem() {}
 
-    public SwapItem(String id, String name, String description, String ownerName, String apartmentCode, boolean available, long timestamp) {
+    public SwapItem(String id, String name, String description, String ownerName, String ownerUid, String apartmentCode, boolean available, long timestamp) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.ownerName = ownerName;
+        this.ownerUid = ownerUid;
         this.apartmentCode = apartmentCode;
         this.available = available;
         this.timestamp = timestamp;
@@ -41,4 +44,7 @@ public class SwapItem {
 
     public long getTimestamp() { return timestamp; }
     public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
+
+    public String getOwnerUid() { return ownerUid; }
+    public void setOwnerUid(String ownerUid) { this.ownerUid = ownerUid; }
 }

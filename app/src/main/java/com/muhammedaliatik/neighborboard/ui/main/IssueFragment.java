@@ -88,9 +88,12 @@ public class IssueFragment extends Fragment {
     private void showAddIssueDialog() {
         View dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_issue, null);
 
-        AlertDialog dialog = new AlertDialog.Builder(requireContext(), R.style.TransparentDialog)
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setView(dialogView)
                 .create();
+
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
         EditText etTitle = dialogView.findViewById(R.id.etTitle);
         EditText etDescription = dialogView.findViewById(R.id.etDescription);
@@ -112,8 +115,9 @@ public class IssueFragment extends Fragment {
 
             String aptCode = sessionManager.getApartmentCode();
             String senderName = sessionManager.getDisplayName();
+            String uid = sessionManager.getUid();
             String key = dbRef.child("issues").child(aptCode).push().getKey();
-            Issue issue = new Issue(key, title, description, location, "açık", senderName, aptCode, System.currentTimeMillis());
+            Issue issue = new Issue(key, title, description, location, "açık", senderName, uid, aptCode, System.currentTimeMillis());
 
             dbRef.child("issues").child(aptCode).child(key).setValue(issue)
                     .addOnSuccessListener(unused -> {

@@ -104,9 +104,12 @@ public class SwapFragment extends Fragment {
     private void showAddSwapDialog() {
         View dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_swap, null);
 
-        AlertDialog dialog = new AlertDialog.Builder(requireContext(), R.style.TransparentDialog)
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setView(dialogView)
                 .create();
+
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
         EditText etName = dialogView.findViewById(R.id.etName);
         EditText etDescription = dialogView.findViewById(R.id.etDescription);
@@ -126,8 +129,9 @@ public class SwapFragment extends Fragment {
 
             String aptCode = sessionManager.getApartmentCode();
             String ownerName = sessionManager.getDisplayName();
+            String uid = sessionManager.getUid();
             String key = dbRef.child("swapItems").child(aptCode).push().getKey();
-            SwapItem item = new SwapItem(key, name, description, ownerName, aptCode, true, System.currentTimeMillis());
+            SwapItem item = new SwapItem(key, name, description, ownerName, uid, aptCode, true, System.currentTimeMillis());
 
             dbRef.child("swapItems").child(aptCode).child(key).setValue(item)
                     .addOnSuccessListener(unused -> {
@@ -140,7 +144,6 @@ public class SwapFragment extends Fragment {
 
         dialog.show();
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
