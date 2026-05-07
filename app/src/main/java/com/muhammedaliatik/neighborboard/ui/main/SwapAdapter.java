@@ -45,10 +45,9 @@ public class SwapAdapter extends RecyclerView.Adapter<SwapAdapter.ViewHolder> {
             holder.binding.tvSwapStatus.setText("Müsait");
             holder.binding.tvSwapStatus.setTextColor(0xFF43A047);
         } else {
-            holder.binding.tvSwapStatus.setText("Verildi");
+            holder.binding.tvSwapStatus.setText("Takas Verildi");
             holder.binding.tvSwapStatus.setTextColor(0xFFE53935);
         }
-
         String date = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
                 .format(new Date(item.getTimestamp()));
         holder.binding.tvSwapDate.setText(date);
