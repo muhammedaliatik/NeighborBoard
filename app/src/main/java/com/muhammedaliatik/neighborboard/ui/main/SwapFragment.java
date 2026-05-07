@@ -1,16 +1,16 @@
 package com.muhammedaliatik.neighborboard.ui.main;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -19,16 +19,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.muhammedaliatik.neighborboard.R;
 import com.muhammedaliatik.neighborboard.databinding.FragmentSwapBinding;
 import com.muhammedaliatik.neighborboard.model.SwapItem;
 import com.muhammedaliatik.neighborboard.utils.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.muhammedaliatik.neighborboard.R;
-import android.view.View;
-import android.widget.Button;
 
 public class SwapFragment extends Fragment {
 
@@ -53,22 +50,7 @@ public class SwapFragment extends Fragment {
         dbRef = FirebaseDatabase.getInstance().getReference();
         swapList = new ArrayList<>();
 
-        adapter = new SwapAdapter(swapList, item -> {
-            new AlertDialog.Builder(requireContext())
-                    .setTitle("Talep Et")
-                    .setMessage(item.getName() + " eşyasını talep etmek istiyor musunuz?\nSahibi: " + item.getOwnerName())
-                    .setPositiveButton("Evet, Talep Et", (dialog, which) -> {
-                        String aptCode = sessionManager.getApartmentCode();
-                        dbRef.child("swapItems").child(aptCode).child(item.getId())
-                                .child("available").setValue(false)
-                                .addOnSuccessListener(unused ->
-                                        Toast.makeText(requireContext(), "Talep iletildi! " + item.getOwnerName() + " ile iletişime geçin.", Toast.LENGTH_LONG).show())
-                                .addOnFailureListener(e ->
-                                        Toast.makeText(requireContext(), "Hata: " + e.getMessage(), Toast.LENGTH_SHORT).show());
-                    })
-                    .setNegativeButton("İptal", null)
-                    .show();
-        });
+        adapter = new SwapAdapter(swapList);
         binding.rvSwapItems.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.rvSwapItems.setAdapter(adapter);
 
@@ -144,6 +126,7 @@ public class SwapFragment extends Fragment {
 
         dialog.show();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
