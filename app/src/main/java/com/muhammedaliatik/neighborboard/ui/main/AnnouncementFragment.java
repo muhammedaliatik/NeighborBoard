@@ -34,6 +34,7 @@ import androidx.core.app.NotificationCompat;
 import com.muhammedaliatik.neighborboard.R;
 import android.view.View;
 import android.widget.Button;
+import android.view.ViewGroup;
 
 public class AnnouncementFragment extends Fragment {
 
@@ -95,9 +96,12 @@ public class AnnouncementFragment extends Fragment {
     private void showAddAnnouncementDialog() {
         View dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_announcement, null);
 
-        AlertDialog dialog = new AlertDialog.Builder(requireContext(), R.style.TransparentDialog)
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setView(dialogView)
                 .create();
+
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
         EditText etTitle = dialogView.findViewById(R.id.etTitle);
         EditText etContent = dialogView.findViewById(R.id.etContent);
@@ -117,13 +121,14 @@ public class AnnouncementFragment extends Fragment {
 
             String aptCode = sessionManager.getApartmentCode();
             String senderName = sessionManager.getDisplayName();
-            String key = dbRef.child("announcements").child(aptCode).push().getKey();
             String uid = sessionManager.getUid();
+            String key = dbRef.child("announcements").child(aptCode).push().getKey();
             Announcement announcement = new Announcement(key, title, content, senderName, uid, aptCode, System.currentTimeMillis());
+
             dbRef.child("announcements").child(aptCode).child(key).setValue(announcement)
                     .addOnSuccessListener(unused -> {
                         Toast.makeText(requireContext(), "Duyuru paylaşıldı", Toast.LENGTH_SHORT).show();
-                        sendLocalNotification("Yeni Duyuru", title + ": " + content);
+                        sendLocalNotification("Yeni Duyuru", title);
                         dialog.dismiss();
                     })
                     .addOnFailureListener(e ->
@@ -132,7 +137,6 @@ public class AnnouncementFragment extends Fragment {
 
         dialog.show();
     }
-
     private void sendLocalNotification(String title, String body) {
         String channelId = "neighborboard_channel";
         NotificationManager manager = (NotificationManager) requireContext()
