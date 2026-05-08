@@ -21,14 +21,14 @@
             android:text="Komşular"
             android:textSize="26sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
+            android:textColor="@color/text_primary"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Aynı apartmandaki sakinler"
             android:textSize="13sp"
-            android:textColor="#8892B0"/>
+            android:textColor="@color/text_secondary"/>
 
     </LinearLayout>
 

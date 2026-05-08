@@ -12,7 +12,6 @@
         android:padding="24dp"
         android:gravity="center">
 
-        <!-- Avatar -->
         <ImageView
             android:id="@+id/ivProfilePhoto"
             android:layout_width="90dp"
@@ -30,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="Fotoğraf Değiştir"
             android:textSize="12sp"
-            android:textColor="#7C3AED"
+            android:textColor="@color/accent"
             android:layout_marginBottom="16dp"
             android:clickable="true"
             android:focusable="true"/>
@@ -41,7 +40,7 @@
             android:layout_height="wrap_content"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_primary"
             android:layout_marginBottom="6dp"/>
 
         <TextView
@@ -49,10 +48,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:textColor="#8892B0"
+            android:textColor="@color/text_secondary"
             android:layout_marginBottom="32dp"/>
 
-        <!-- Bilgi kartı -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,14 +73,14 @@
                     android:layout_weight="1"
                     android:text="Üyelik Durumu"
                     android:textSize="14sp"
-                    android:textColor="#8892B0"/>
+                    android:textColor="@color/text_secondary"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Aktif"
                     android:textSize="14sp"
-                    android:textColor="#A78BFA"
+                    android:textColor="@color/accent"
                     android:textStyle="bold"/>
 
             </LinearLayout>
@@ -90,7 +88,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#2A2A4A"
+                android:background="@color/divider"
                 android:layout_marginBottom="14dp"/>
 
             <LinearLayout
@@ -105,21 +103,20 @@
                     android:layout_weight="1"
                     android:text="Platform"
                     android:textSize="14sp"
-                    android:textColor="#8892B0"/>
+                    android:textColor="@color/text_secondary"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="NeighborBoard"
                     android:textSize="14sp"
-                    android:textColor="#60A5FA"
+                    android:textColor="@color/secondary"
                     android:textStyle="bold"/>
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <!-- Çıkış butonu -->
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="match_parent"
@@ -127,7 +124,7 @@
             android:text="Çıkış Yap"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_on_primary"
             android:background="@drawable/bg_button_logout"
             android:stateListAnimator="@null"
             android:elevation="4dp"

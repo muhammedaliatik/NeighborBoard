@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg_dark_gradient">
+    android:background="@color/background">
 
     <FrameLayout
         android:id="@+id/fragmentContainer"
@@ -16,7 +16,7 @@
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="@drawable/bg_bottom_nav"
+        android:background="@color/surface"
         android:elevation="16dp"
         app:itemIconTint="@color/bottom_nav_color"
         app:itemTextColor="@color/bottom_nav_color"

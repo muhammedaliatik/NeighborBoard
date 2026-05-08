@@ -62,7 +62,6 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
             // Yeni duyurular — uid ile direkt çek
             loadPhotoByUid(a.getSenderUid(), holder);
             // Yorum sayısını yükle
-            loadCommentCount(a.getId(), a.getApartmentCode(), holder.binding.tvCommentCount);
         } else if (a.getSenderName() != null && !a.getSenderName().isEmpty()) {
             // Eski duyurular — isimden uid bul
             dbRef.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -79,7 +78,8 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
                 }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError error) {}
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
             });
         }
         holder.itemView.setOnClickListener(v ->
@@ -110,7 +110,8 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {}
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
                 });
     }
 
@@ -160,7 +161,8 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
             }
 
             @Override
-            public void onCancelled(@NonNull com.google.firebase.database.DatabaseError error) {}
+            public void onCancelled(@NonNull com.google.firebase.database.DatabaseError error) {
+            }
         });
 
         btnSend.setOnClickListener(v -> {
@@ -186,22 +188,5 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
         });
 
         dialog.show();
-    }
-    private void loadCommentCount(String itemId, String aptCode, android.widget.TextView tvCount) {
-        dbRef.child("announcementComments").child(aptCode).child(itemId)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        long count = snapshot.getChildrenCount();
-                        if (count > 0) {
-                            tvCount.setText(count + " yorum");
-                        } else {
-                            tvCount.setText("Henüz yorum yok");
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {}
-                });
     }
 }
