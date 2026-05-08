@@ -70,11 +70,14 @@
         android:gravity="center_vertical"
         android:paddingStart="18dp">
 
-        <View
+        <ImageView
+            android:id="@+id/ivAvatar"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:background="@drawable/bg_avatar"
-            android:layout_marginEnd="8dp"/>
+            android:layout_marginEnd="8dp"
+            android:scaleType="centerCrop"
+            android:clipToOutline="true"/>
 
         <TextView
             android:id="@+id/tvSwapOwner"

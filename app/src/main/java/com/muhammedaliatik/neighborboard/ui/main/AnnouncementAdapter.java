@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +24,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import com.muhammedaliatik.neighborboard.R;
 
 public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapter.ViewHolder> {
 
@@ -58,6 +61,8 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
         if (a.getSenderUid() != null && !a.getSenderUid().isEmpty()) {
             // Yeni duyurular — uid ile direkt çek
             loadPhotoByUid(a.getSenderUid(), holder);
+            // Yorum sayısını yükle
+            loadCommentCount(a.getId(), a.getApartmentCode(), holder.binding.tvCommentCount);
         } else if (a.getSenderName() != null && !a.getSenderName().isEmpty()) {
             // Eski duyurular — isimden uid bul
             dbRef.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -77,6 +82,9 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
                 public void onCancelled(@NonNull DatabaseError error) {}
             });
         }
+        holder.itemView.setOnClickListener(v ->
+                showCommentsDialog(holder.itemView.getContext(), a.getId(), a.getApartmentCode(), "announcement")
+        );
     }
 
 
@@ -113,5 +121,87 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
             super(binding.getRoot());
             this.binding = binding;
         }
+    }
+
+    private void showCommentsDialog(android.content.Context context, String itemId, String aptCode, String type) {
+        android.view.View dialogView = android.view.LayoutInflater.from(context)
+                .inflate(R.layout.dialog_comments, null);
+
+        androidx.appcompat.app.AlertDialog dialog = new androidx.appcompat.app.AlertDialog.Builder(context)
+                .setView(dialogView)
+                .create();
+
+        dialog.getWindow().setLayout(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        androidx.recyclerview.widget.RecyclerView rvComments = dialogView.findViewById(R.id.rvComments);
+        android.widget.EditText etComment = dialogView.findViewById(R.id.etComment);
+        android.widget.Button btnSend = dialogView.findViewById(R.id.btnSendComment);
+
+        java.util.List<com.muhammedaliatik.neighborboard.model.Comment> commentList = new java.util.ArrayList<>();
+        CommentsAdapter adapter = new CommentsAdapter(commentList);
+        rvComments.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(context));
+        rvComments.setAdapter(adapter);
+
+        com.google.firebase.database.DatabaseReference commentsRef = dbRef.child(type + "Comments")
+                .child(aptCode).child(itemId);
+
+        commentsRef.addValueEventListener(new com.google.firebase.database.ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull com.google.firebase.database.DataSnapshot snapshot) {
+                commentList.clear();
+                for (com.google.firebase.database.DataSnapshot ds : snapshot.getChildren()) {
+                    com.muhammedaliatik.neighborboard.model.Comment comment = ds.getValue(com.muhammedaliatik.neighborboard.model.Comment.class);
+                    if (comment != null) {
+                        commentList.add(comment);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull com.google.firebase.database.DatabaseError error) {}
+        });
+
+        btnSend.setOnClickListener(v -> {
+            String text = etComment.getText().toString().trim();
+            if (text.isEmpty()) {
+                android.widget.Toast.makeText(context, "Yorum boş bırakılamaz", android.widget.Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String userName = new com.muhammedaliatik.neighborboard.utils.SessionManager(context).getDisplayName();
+            String uid = new com.muhammedaliatik.neighborboard.utils.SessionManager(context).getUid();
+            String commentKey = commentsRef.push().getKey();
+            com.muhammedaliatik.neighborboard.model.Comment comment = new com.muhammedaliatik.neighborboard.model.Comment(
+                    commentKey, text, userName, uid, System.currentTimeMillis());
+
+            commentsRef.child(commentKey).setValue(comment)
+                    .addOnSuccessListener(unused -> {
+                        etComment.setText("");
+                        android.widget.Toast.makeText(context, "Yorum eklendi", android.widget.Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(e ->
+                            android.widget.Toast.makeText(context, "Hata: " + e.getMessage(), android.widget.Toast.LENGTH_SHORT).show());
+        });
+
+        dialog.show();
+    }
+    private void loadCommentCount(String itemId, String aptCode, android.widget.TextView tvCount) {
+        dbRef.child("announcementComments").child(aptCode).child(itemId)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        long count = snapshot.getChildrenCount();
+                        if (count > 0) {
+                            tvCount.setText(count + " yorum");
+                        } else {
+                            tvCount.setText("Henüz yorum yok");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {}
+                });
     }
 }

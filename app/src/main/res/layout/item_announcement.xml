@@ -62,13 +62,14 @@
         android:background="#2A2A4A"
         android:layout_marginBottom="10dp"/>
 
-    <!-- Gönderen -->
+    <!-- Gönderen + Tarih -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingStart="18dp">
+        android:paddingStart="18dp"
+        android:layout_marginBottom="12dp">
 
         <ImageView
             android:id="@+id/ivAvatar"
@@ -81,10 +82,37 @@
 
         <TextView
             android:id="@+id/tvSender"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:textColor="#8892B0"/>
+
+    </LinearLayout>
+
+    <!-- Yorum sayısı -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="18dp"
+        android:background="#0A0A1A">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="💬"
+            android:textSize="14sp"
+            android:layout_marginEnd="6dp"/>
+
+        <TextView
+            android:id="@+id/tvCommentCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:textColor="#8892B0"/>
+            android:textColor="#7C3AED"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
