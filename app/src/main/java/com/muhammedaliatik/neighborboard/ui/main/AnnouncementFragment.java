@@ -128,7 +128,6 @@ public class AnnouncementFragment extends Fragment {
             dbRef.child("announcements").child(aptCode).child(key).setValue(announcement)
                     .addOnSuccessListener(unused -> {
                         Toast.makeText(requireContext(), "Duyuru paylaşıldı", Toast.LENGTH_SHORT).show();
-                        sendLocalNotification("Yeni Duyuru", title);
                         dialog.dismiss();
                     })
                     .addOnFailureListener(e ->
