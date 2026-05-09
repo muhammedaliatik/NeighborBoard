@@ -21,14 +21,22 @@ exports.otomatikDuyuruBildirimi = functions.database.ref('/announcements/{aptCod
         const temizAptCode = aptCode.toString().replace(/\s+/g, '').toLowerCase();
         const topicName = "apartman_" + temizAptCode;
 
-        // Bildirim içeriği: Gönderen kişinin adını başlık, duyuru başlığını içerik yapıyoruz
-        const payload = {
-            notification: {
-                title: duyuru.senderName + " yeni bir duyuru paylaştı", // Örn: "Ahmet yeni bir duyuru paylaştı"
-                body: duyuru.title // Örn: "Yarın sular kesilecek"
-            },
-            topic: topicName
-        };
+       // Bildirim içeriği: Gönderen kişinin adını başlık, duyuru başlığını içerik yapıyoruz
+               const payload = {
+                   notification: {
+                       title: duyuru.senderName + " yeni bir duyuru paylaştı",
+                       body: duyuru.title
+                   },
+                   // BUNU KESİNLİKLE EKLEMEN LAZIM:
+                   android: {
+                       priority: "high",
+                       notification: {
+                           channelId: "duyuru_kanali", // DİKKAT: Android Studio'da oluşturduğun ID neyse tam olarak o yazmalı!
+                           sound: "default"
+                       }
+                   },
+                   topic: topicName
+               };
 
         // Bildirimi o apartman grubuna fırlat
         return admin.messaging().send(payload)

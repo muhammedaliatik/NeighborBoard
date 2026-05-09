@@ -1,6 +1,8 @@
 package com.muhammedaliatik.neighborboard.ui.main;
 
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.muhammedaliatik.neighborboard.R;
 import com.muhammedaliatik.neighborboard.databinding.ActivityMainBinding;
+import com.muhammedaliatik.neighborboard.utils.SessionManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,16 +35,41 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // 2. ADIM: Bildirim grubuna abone olma (Topic Subscription)
-        // (Bunu daha sonra apartman numarasına göre dinamik yapabilirsin)
-        FirebaseMessaging.getInstance().subscribeToTopic("mahalle_bildirimleri")
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        Log.e("FCM", "Bildirim grubuna abone olunamadı!");
-                    } else {
-                        Log.d("FCM", "Bildirim grubuna başarıyla abone olundu!");
-                    }
-                });
+        // --- BİLDİRİM KANALI OLUŞTURMA (Android 8.0 ve üzeri için ŞART) ---
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String channelId = "duyuru_kanali"; // Node.js'de yazdığımızla BİREBİR aynı olmalı
+            CharSequence name = "Apartman Duyuruları";
+            String description = "Apartmanınıza ait yeni duyurular";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+
+            NotificationChannel channel = new NotificationChannel(channelId, name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
+
+        // --- 2. ADIM: DİNAMİK BİLDİRİM GRUBUNA ABONE OLMA ---
+        SessionManager sessionManager = new SessionManager(this);
+        String currentAptCode = sessionManager.getApartmentCode();
+
+        if (currentAptCode != null && !currentAptCode.trim().isEmpty()) {
+            // Firebase'deki topic formatıyla aynı yapıyoruz (boşluksuz, küçük harf)
+            String topicName = "apartman_" + currentAptCode.trim().toLowerCase();
+
+            FirebaseMessaging.getInstance().subscribeToTopic(topicName)
+                    .addOnCompleteListener(task -> {
+                        if (!task.isSuccessful()) {
+                            Log.e("FCM", topicName + " grubuna abone olunamadı!");
+                        } else {
+                            Log.d("FCM", topicName + " grubuna başarıyla abone olundu!");
+                        }
+                    });
+        } else {
+            Log.e("FCM", "Apartman kodu bulunamadı, abonelik yapılamadı.");
+        }
 
         loadFragment(new AnnouncementFragment());
 

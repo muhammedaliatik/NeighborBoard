@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.muhammedaliatik.neighborboard.R;
 import com.muhammedaliatik.neighborboard.databinding.FragmentProfileBinding;
 import com.muhammedaliatik.neighborboard.ui.auth.LoginActivity;
@@ -94,8 +96,19 @@ public class ProfileFragment extends Fragment {
         binding.ivProfilePhoto.setOnClickListener(v -> checkPermissionAndOpenGallery());
 
         binding.btnLogout.setOnClickListener(v -> {
+            // 1. Önce kullanıcının eski apartman aboneliğini iptal et
+            String oldAptCode = sessionManager.getApartmentCode();
+            if (oldAptCode != null && !oldAptCode.trim().isEmpty()) {
+                String topicName = "apartman_" + oldAptCode.trim().toLowerCase();
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(topicName)
+                        .addOnSuccessListener(aVoid -> Log.d("FCM", "Eski abonelik iptal edildi: " + topicName));
+            }
+
+            // 2. Sonra oturumu ve verileri temizle
             FirebaseAuth.getInstance().signOut();
             sessionManager.clearSession();
+
+            // 3. Login ekranına yönlendir
             Intent intent = new Intent(requireContext(), LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
@@ -130,7 +143,8 @@ public class ProfileFragment extends Fragment {
 
             // Küçült — DB'ye sığsın
             bitmap = rotateBitmapIfNeeded(imageUri, bitmap);
-            Bitmap resized = Bitmap.createScaledBitmap(bitmap, 200, 200, true);            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            Bitmap resized = Bitmap.createScaledBitmap(bitmap, 200, 200, true);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
             resized.compress(Bitmap.CompressFormat.JPEG, 70, baos);
             byte[] imageBytes = baos.toByteArray();
             String base64Image = Base64.encodeToString(imageBytes, Base64.DEFAULT);
